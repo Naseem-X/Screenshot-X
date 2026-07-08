@@ -1,0 +1,9 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="Screenshot-X.csproj" Id="42330ef2-e4a3-4bee-883a-e38781b1743e">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>

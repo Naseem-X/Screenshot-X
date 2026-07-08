@@ -1,0 +1,17 @@
+C:\Screenshot-X\bin\Debug\Screenshot-X.exe.config
+C:\Screenshot-X\bin\Debug\Screenshot-X.exe
+C:\Screenshot-X\bin\Debug\Screenshot-X.pdb
+C:\Screenshot-X\bin\Debug\Guna.UI2.dll
+C:\Screenshot-X\obj\Debug\Screenshot-X.csproj.AssemblyReference.cache
+C:\Screenshot-X\obj\Debug\Screenshot_X.frmMainApp.resources
+C:\Screenshot-X\obj\Debug\Screenshot_X.Properties.Resources.resources
+C:\Screenshot-X\obj\Debug\Screenshot-X.csproj.GenerateResource.cache
+C:\Screenshot-X\obj\Debug\Screenshot-X.csproj.CoreCompileInputs.cache
+C:\Screenshot-X\obj\Debug\Screensh.9F22A369.Up2Date
+C:\Screenshot-X\obj\Debug\Screenshot-X.exe
+C:\Screenshot-X\obj\Debug\Screenshot-X.pdb
+C:\Screenshot-X\bin\Debug\Data\Close.png
+C:\Screenshot-X\bin\Debug\Data\Custom.png
+C:\Screenshot-X\bin\Debug\Data\Full.png
+C:\Screenshot-X\bin\Debug\Data\Background.png
+C:\Screenshot-X\bin\Debug\Data\Icon Tray.ico
