@@ -1,5 +1,4 @@
 ﻿using Guna.UI2.WinForms;
-using ScreenRecorderLib;
 using Screenshot_X.Forms;
 using System;
 using System.Drawing;
@@ -7,7 +6,6 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tesseract;
 
@@ -17,6 +15,9 @@ namespace Screenshot_X
 {
     public partial class frmMainApp : Form
     {
+
+        private frmScreenVideoTab _recordForm;
+
         public frmMainApp()
         {
             InitializeComponent();
@@ -24,15 +25,19 @@ namespace Screenshot_X
 
 
         }
+
         private void frmMainApp_Load(object sender, EventArgs e)
         {
-            LoadTrayIcon();
+            LoadMainTrayIcon();
+            LoadRecordingTrayIcon();
             LoadToolTip();
             LoadContextectMenueForIconTray();
-            LoadScreenshotMode();
+           
             LoadAppLocation();
 
-            Notification.MouseClick += (s, args) =>
+            LoadScreenshotModeOptions();
+
+            MainNotification.MouseClick += (s, args) =>
             {
                 if (args.Button == MouseButtons.Left)
                 {
@@ -55,7 +60,11 @@ namespace Screenshot_X
             this.KeyPreview = true;
             this.KeyDown += frmMainApp_KeyDown;
 
+            this.TopMost  = true;
 
+            this.Activate();
+
+            this.LocationChanged += frmMainApp_LocationChanged;
 
         }
        
@@ -98,9 +107,19 @@ namespace Screenshot_X
             old?.Dispose();
         }
 
+        public void LoadImageToPictureBox(Guna2PictureBox pb, string path)
+        {
+            string fullPath = Path.Combine(Application.StartupPath, path);
+            if (!File.Exists(fullPath)) return;
+
+            var old = pb.Image;
+            pb.Image = (Bitmap)Image.FromStream(new MemoryStream(File.ReadAllBytes(fullPath)));
+            old?.Dispose();
+        }
+
         // ====================   Hotkey   ====================
 
-
+        private bool _isProcessingHotkey = false;
         [DllImport("user32.dll")] private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
 
         [DllImport("user32.dll")]private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
@@ -110,10 +129,10 @@ namespace Screenshot_X
         private const int HOTKEY_ID = 1;
         private const int HOTKEY_ID_2 = 2;
 
-        private NotifyIcon Notification;
+       
         private const int MOD_CONTROL = 0x0002;
         private const int MOD_SHIFT = 0x0004;
-      //  private const int MOD_WIN = 0x0008;
+         private const int MOD_WIN = 0x0008;
         private const int MOD_ALT = 0x0001;
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
@@ -122,56 +141,78 @@ namespace Screenshot_X
         private enum HotkeyId
         {
             ToggleApp = 1,
-            FullScreenshot,
-            RegionScreenshot,
-            Freeform,
+         
             OCR,
+
             ColorPicker,
-            ScreenshotMode,
-            ScreenVideoMode,
-           
+
+            ShowScreenshotModeTab,
+            
+            TakeScreenshot,
+            
+            TakeScreenVideoTab,
+            QuitApp
         }
 
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == 0x0312) // WM_HOTKEY
             {
-                switch ((HotkeyId)m.WParam.ToInt32())
+                // إذا كان البرنامج يقوم بمعالجة اختصار حالياً، تجاهل الضغطة الجديدة فوراً
+                if (_isProcessingHotkey)
                 {
-                    case HotkeyId.ToggleApp:
-                        if (_isInVideoTab) break;
-                        if (this.Visible) HideAppAnimated(); else ShowApp();
-                        break;
+                    base.WndProc(ref m);
+                    return;
+                }
 
-                    case HotkeyId.FullScreenshot:
-                        FullScreenshotProcess();
-                        break;
+                HotkeyId hotkey = (HotkeyId)m.WParam.ToInt32();
 
-                    case HotkeyId.RegionScreenshot:
-                        RegionScreenshotProcess();
-                        break;
+                // قفل المعالجة لمنع الدخول المتكرر
+                _isProcessingHotkey = true;
 
-                    case HotkeyId.Freeform:
-                        FreeformProcess();
-                        break;
+                try
+                {
+                    switch (hotkey)
+                    {
+                        case HotkeyId.ToggleApp:
+                            if (_isInVideoTab) break;
+                            if (this.Visible) HideAppAnimated(); else ShowApp();
+                            break;
 
-                    case HotkeyId.OCR:
-                        pbExtractText_Click(this, EventArgs.Empty);
-                        break;
+                        case HotkeyId.TakeScreenVideoTab:
+                            // فحص إضافي للتأكد أن نافذة الفيديو ليست مفتوحة بالفعل
+                            if (!_isInVideoTab && _recordForm == null)
+                            {
+                                LoadScreenVideoTab();
+                            }
+                            break;
 
-                    case HotkeyId.ColorPicker:
-                        pbColorPicker_Click(this, EventArgs.Empty);
-                        break;
+                        case HotkeyId.ShowScreenshotModeTab:
+                            cmbScreenshotMode.Visible = !cmbScreenshotMode.Visible;
+                            cmbScreenshotMode.DropDownStyle = ComboBoxStyle.DropDownList;
+                            break;
 
-                    case HotkeyId.ScreenshotMode:
-                        LoadScreenshotMode();
-                        break;
+                        case HotkeyId.QuitApp:
+                            this.Close();
+                            break;
 
-                    case HotkeyId.ScreenVideoMode:
-                        LoadScreenVideoMode();
-                        break;
+                        case HotkeyId.OCR:
+                            pbExtractText_Click(this, EventArgs.Empty);
+                            break;
 
+                        case HotkeyId.ColorPicker:
+                            pbColorPicker_Click(this, EventArgs.Empty);
+                            break;
 
+                        case HotkeyId.TakeScreenshot:
+                            pbScreenshotMode_Click(this, EventArgs.Empty);
+                            break;
+                    }
+                }
+                finally
+                {
+                    
+                    _isProcessingHotkey = false;
                 }
             }
             base.WndProc(ref m);
@@ -179,54 +220,133 @@ namespace Screenshot_X
 
         private void RegisterAllHotkeys()
         {
-            // ALT + Space
-            RegisterHotKey(this.Handle, (int)HotkeyId.ToggleApp, MOD_CONTROL | MOD_ALT, (int)Keys.Space);
+           
+            RegisterHotKey(this.Handle, (int)HotkeyId.ToggleApp, MOD_ALT, (int)Keys.L);
 
-            // Ctrl+Shift+F → Full Screenshot
-            RegisterHotKey(this.Handle, (int)HotkeyId.FullScreenshot, MOD_CONTROL | MOD_SHIFT, (int)Keys.F);
+        
+            RegisterHotKey(this.Handle, (int)HotkeyId.OCR, MOD_ALT, (int)Keys.O);
 
-            // Ctrl+Shift+R → Region Screenshot
-            RegisterHotKey(this.Handle, (int)HotkeyId.RegionScreenshot, MOD_CONTROL | MOD_SHIFT, (int)Keys.R);
+           
+            RegisterHotKey(this.Handle, (int)HotkeyId.ColorPicker, MOD_ALT, (int)Keys.C);
 
-            // Ctrl+Shift+D → Freeform (D = Draw/lasso-ish)
-            RegisterHotKey(this.Handle, (int)HotkeyId.Freeform, MOD_CONTROL | MOD_SHIFT, (int)Keys.D);
+            
+            RegisterHotKey(this.Handle, (int)HotkeyId.TakeScreenshot, MOD_ALT, (int)Keys.S);
 
-            // Ctrl+Shift+O → OCR (Extract Text)
-            RegisterHotKey(this.Handle, (int)HotkeyId.OCR, MOD_CONTROL | MOD_SHIFT, (int)Keys.O);
 
-            // Ctrl+Shift+C → Color Picker
-            RegisterHotKey(this.Handle, (int)HotkeyId.ColorPicker, MOD_CONTROL | MOD_SHIFT, (int)Keys.C);
+            RegisterHotKey(this.Handle, (int)HotkeyId.ShowScreenshotModeTab, MOD_ALT, (int)Keys.M);
 
-            // Ctrl+Shift+1 → Screenshot Mode
-            RegisterHotKey(this.Handle, (int)HotkeyId.ScreenshotMode, MOD_CONTROL | MOD_SHIFT, (int)Keys.D1);
+         
+            RegisterHotKey(this.Handle, (int)HotkeyId.TakeScreenVideoTab, MOD_CONTROL| MOD_ALT, (int)Keys.S);
 
-            // Ctrl+Shift+2 → Screen Video Mode
-            RegisterHotKey(this.Handle, (int)HotkeyId.ScreenVideoMode, MOD_CONTROL | MOD_SHIFT, (int)Keys.D2);
+
+            RegisterHotKey(this.Handle, (int)HotkeyId.QuitApp, MOD_ALT , (int)Keys.Q);
         }
 
 
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
+            if (MainNotification != null)
+            {
+                MainNotification.Visible = false;
+                MainNotification.Dispose();
+            }
+
+            if (RecordingNotification != null)
+            {
+                RecordingNotification.Visible = false;
+                RecordingNotification.Dispose();
+            }
+
+          
             foreach (HotkeyId id in Enum.GetValues(typeof(HotkeyId)))
                 UnregisterHotKey(this.Handle, (int)id);
 
             base.OnFormClosed(e);
         }
 
-        // ====================  Tray Icon====================
-        void LoadTrayIcon()
+        // ====================  Tray Icon  ====================
+
+
+        //========  For Main App  ==========
+
+        private NotifyIcon MainNotification;
+        void LoadMainTrayIcon()
         {
-            Notification = new NotifyIcon();
+            MainNotification = new NotifyIcon();
             string iconPath = Path.Combine(Application.StartupPath, "Data", "Icon Tray.ico");
-            Notification.Icon = new Icon(iconPath);
-            Notification.Text = "Screenshot X";
-            Notification.Visible = true;
+            MainNotification.Icon = new Icon(iconPath);
+            MainNotification.Text = "Screenshot X";
+            MainNotification.Visible = true;
 
 
         }
 
 
+
+
+
+        //========  For Record  ==========
+        private NotifyIcon RecordingNotification;
+        private ToolStripMenuItem toggleRecordingWindowItem;
+        public event Action StopRecordingRequested;
+        public event Action ToggleRecordingWindowRequested;
+
+
+
+        void LoadRecordingTrayIcon()
+        {
+            RecordingNotification = new NotifyIcon();
+            string iconPath = Path.Combine(Application.StartupPath, "Data", "RecordTray", "Record.ico");
+            RecordingNotification.Icon = new Icon(iconPath);
+            RecordingNotification.Text = "Screenshot X - Recording";
+            RecordingNotification.Visible = false;
+
+            ContextMenuStrip recMenu = new ContextMenuStrip();
+            recMenu.Renderer = new RoundedMenuRenderer();
+            recMenu.BackColor = ColorTranslator.FromHtml("#151515");
+            recMenu.ForeColor = Color.White;
+            recMenu.Font = new Font("Segoe UI", 9F);
+            recMenu.ShowImageMargin = false;
+            recMenu.Padding = new Padding(6);
+
+            recMenu.Items.Add("Stop Recording", null, (s, e) => StopRecordingRequested?.Invoke());
+
+            toggleRecordingWindowItem = new ToolStripMenuItem("Show Recording Window");
+            toggleRecordingWindowItem.Click += (s, e) => ToggleRecordingWindowRequested?.Invoke();
+            recMenu.Items.Add(toggleRecordingWindowItem);
+
+            recMenu.Opening += (s, e) => SetRoundedRegion(recMenu, 8);
+
+            RecordingNotification.ContextMenuStrip = recMenu;
+        }
+
+
+        public void UpdateToggleRecordingWindowLabel(bool isCurrentlyVisible)
+        {
+            toggleRecordingWindowItem.Text = isCurrentlyVisible ? "Hide Recording Window" : "Show Recording Window";
+        }
+
+        public void SwitchToRecordingTray()
+        {
+            MainNotification.Visible = false;
+            RecordingNotification.Visible = true;
+        }
+
+        public void SwitchToMainTray()
+        {
+            RecordingNotification.Visible = false;
+            MainNotification.Visible = true;
+        }
+
+        public void ShowTrayBalloon(string title, string text, ToolTipIcon icon, int timeout = 1500)
+        {
+            var active = RecordingNotification.Visible ? RecordingNotification : MainNotification;
+            active.ShowBalloonTip(timeout, title, text, icon);
+        }
+
+
+        
         // ====================  Too Tip====================
 
         private Guna2HtmlToolTip ToolTipApp;
@@ -238,37 +358,41 @@ namespace Screenshot_X
             ToolTipApp.ForeColor = Color.White;
 
 
-            ToolTipApp.SetToolTip(pbClose, "Hide (Ctrl+Alt+Space)");
-            ToolTipApp.SetToolTip(pbOCR, "OCR Extract Text (Ctrl+Shift+O) - [Beta]");
-            ToolTipApp.SetToolTip(pbColorPicker, "Color Picker (Ctrl+Shift+C)");
+            ToolTipApp.SetToolTip(pbMinimize, "Hide\\Show App (Alt + L)");
+            ToolTipApp.SetToolTip(pbOCR, "OCR (Alt+O) - [Beta]");
+            ToolTipApp.SetToolTip(pbColorPicker, "Color Picker (Alt+C)");
             ToolTipApp.SetToolTip(pbDrawing, "Drawing (Soon..)");
 
-            LoadIfRectangleOrScreenVideoToolTip(ToolTipApp);
 
-            ToolTipApp.SetToolTip(pbRegionScreenshot, "Region Screenshot (Ctrl+Shift+R)");
-            ToolTipApp.SetToolTip(pbFullScreenshot, "Full Screenshot (Ctrl+Shift+F)");
-            ToolTipApp.SetToolTip(pbFreeform, "Freeform (Ctrl+Shift+D)");
-            ToolTipApp.SetToolTip(pbScreenshotMode, "Screenshot Mode (Ctrl+Alt+1)");
-            ToolTipApp.SetToolTip(pbScreenVideoMode, "Screenshot Video Mode (Ctrl+Alt+2) - [Prev]");
+
+            LoadScreenshotToolTip();
+
+
+            ToolTipApp.SetToolTip(pbTakeScreenVideo, "Screenshot Video Tab (Ctrl+Alt+S) - [Beta]");
+
+            ToolTipApp.SetToolTip(pbClose, "Close And Quit App (Alt + Q)");
+
+
+            ToolTipApp.SetToolTip(pbMoveButton, "Move");
+
+        
         }
 
-        void LoadIfRectangleOrScreenVideoToolTip(ToolTip ToolTipApp)
+        private void LoadScreenshotToolTip()
         {
+            ToolTipApp.SetToolTip(pbTakeScreenshot, "Take Screenshot (Alt + S), Current Mode: (" + CurrentMode.ToString() + ")");
 
-
-            if (CurrentMode == enMode.ScreenshotMode)
-                ToolTipApp.SetToolTip(pbRectangleOptions, "Rectangle");
-            if (CurrentMode == enMode.ScreenVideoMode)
-                ToolTipApp.SetToolTip(pbRectangleOptions, "Record\\Stop Record");
-
+            ToolTipApp.SetToolTip(pbChangeModeOptions, "ChangeMode (Alt + M), Current Mode: (" + CurrentMode.ToString() + ")");
         }
+
         private void frmMainApp_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape && pnlRectangleOptions.Visible)
+            if (e.KeyCode == Keys.Escape && pnlScreenshotModeTab.Visible)
             {
-                pnlRectangleOptions.Visible = false;
+                pnlScreenshotModeTab.Visible = false;
             }
         }
+
         // ==================== ContextectMenue  ====================
 
         void LoadContextectMenueForIconTray()
@@ -283,14 +407,14 @@ namespace Screenshot_X
 
             menu.Items.Add("Open", null, (s, e) => ShowApp());
             menu.Items.Add("About LQNS-X\\Find Update", null, (s, e) => System.Diagnostics.Process.Start("https://github.com/Naseem-X"));
-            menu.Items.Add("Exit", null, (s, e) => { Notification.Visible = false; Application.Exit(); });
+            menu.Items.Add("Exit", null, (s, e) => { MainNotification.Visible = false; Application.Exit(); });
 
             menu.Opening += (s, e) =>
             {
                 SetRoundedRegion(menu, 8);
             };
 
-            Notification.ContextMenuStrip = menu;
+            MainNotification.ContextMenuStrip = menu;
         }
 
         private void SetRoundedRegion(Control control, int radius)
@@ -404,7 +528,7 @@ namespace Screenshot_X
             catch (Exception ex)
             {
                
-                Notification.ShowBalloonTip(2000, "Screenshot X - Save Error", ex.Message, ToolTipIcon.Warning);
+                MainNotification.ShowBalloonTip(2000, "Screenshot X - Save Error", ex.Message, ToolTipIcon.Warning);
             }
         }
 
@@ -426,10 +550,10 @@ namespace Screenshot_X
             Clipboard.SetImage(screenshot);  
             SaveScreenshotToDisk(screenshot);  
 
-            Notification.ShowBalloonTip(1500, "Screenshot X", "Screenshot saved to Pictures and clipboard!", ToolTipIcon.Info);
+            MainNotification.ShowBalloonTip(1500, "Screenshot X", "Screenshot saved to Pictures and clipboard!", ToolTipIcon.Info);
             this.Show();
 
-            pnlRectangleOptions.Visible = false;
+            pnlScreenshotModeTab.Visible = false;
         }
         private void pbFullScreenshot_Click(object sender, EventArgs e)
         {
@@ -452,12 +576,12 @@ namespace Screenshot_X
                     Clipboard.SetImage(snip.CapturedImage);  
                     SaveScreenshotToDisk(snip.CapturedImage);  
 
-                    Notification.ShowBalloonTip(1500, "Screenshot X", "Region screenshot saved to Pictures and clipboard!", ToolTipIcon.Info);
+                    MainNotification.ShowBalloonTip(1500, "Screenshot X", "Region screenshot saved to Pictures and clipboard!", ToolTipIcon.Info);
                 }
             }
 
             this.Show();
-            pnlRectangleOptions.Visible = false;
+            pnlScreenshotModeTab.Visible = false;
         }
         private void pbRegionScreenshot_Click(object sender, EventArgs e)
         {
@@ -481,12 +605,12 @@ namespace Screenshot_X
                     Clipboard.SetImage(freeform.CapturedImage);  
                     SaveScreenshotToDisk(freeform.CapturedImage);  
 
-                    Notification.ShowBalloonTip(1500, "Screenshot X", "Freeform screenshot saved to Pictures and clipboard!", ToolTipIcon.Info);
+                    MainNotification.ShowBalloonTip(1500, "Screenshot X", "Freeform screenshot saved to Pictures and clipboard!", ToolTipIcon.Info);
                 }
             }
 
             this.Show();
-            pnlRectangleOptions.Visible = false;
+            pnlScreenshotModeTab.Visible = false;
         }
         private void pbFreeform_Click(object sender, EventArgs e)
         {
@@ -494,9 +618,9 @@ namespace Screenshot_X
         }
 
         // ==================== Close Button ====================
-        private void pbClose_Click(object sender, EventArgs e)
+        private void pbMinimize_Click(object sender, EventArgs e)
         {
-            Notification.Visible = true;
+            MainNotification.Visible = true;
             HideAppAnimated();
         }
 
@@ -505,67 +629,87 @@ namespace Screenshot_X
 
         private bool _isInVideoTab = false;
 
-        private void pbRectangleOptions_Click(object sender, EventArgs e)
-        {
-            if (CurrentMode == enMode.ScreenshotMode)
-            {
-                pnlRectangleOptions.Visible = !pnlRectangleOptions.Visible;
-            }
-            else
-            {
-                _isInVideoTab = true;
-                HideAppAnimated();
-                using (frmScreenVideoTab videoForm = new frmScreenVideoTab(Notification))
-                {
-                    videoForm.ShowDialog();
-                }
-                _isInVideoTab = false;
-                ShowApp();
-            }
-        }
+      
 
         // ==================== Mode Options Toggle ====================
-        enum enMode { ScreenVideoMode, ScreenshotMode };
-        enMode CurrentMode = enMode.ScreenshotMode;
+        enum enScreenshotMode { Window,FullScreen ,Freeform };
+        enScreenshotMode CurrentMode = enScreenshotMode.Window;
 
-        void LoadScreenshotMode()
+        private void cmbScreenshotMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadImageToPictureBox(pbRectangleOptions, @"Data\Dark Mode\Controls\Rectangler.png");
-            pbRectangleOptions.Location = new Point(2, 5);
-            CurrentMode = enMode.ScreenshotMode;
-            LoadImageToPictureBox(pbDrawing, @"Data\Dark Mode\Controls\Draw.png");
+            switch (cmbScreenshotMode.SelectedIndex)
+            {
+                case 0:
+                    CurrentMode = enScreenshotMode.Window;
+                    break;
+                case 1:
+                    CurrentMode = enScreenshotMode.FullScreen;
+                    break;
+                case 2:
+                    CurrentMode = enScreenshotMode.Freeform;
+                    break;
+            }
+            LoadScreenshotToolTip();
+        }
+        private void LoadScreenshotModeOptions()
 
-            pbIndecatorScreenshoteMode.Visible = true;
-            pbIndecatorScreenVideoMode.Visible = false;
-            LoadIfRectangleOrScreenVideoToolTip(ToolTipApp);
+        {
+
+            cmbScreenshotMode.Items.Clear();
+
+
+            cmbScreenshotMode.Items.Add("Window");
+
+            cmbScreenshotMode.Items.Add("Full Screen");
+
+            cmbScreenshotMode.Items.Add("Freeform");
+
+            cmbScreenshotMode.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            cmbScreenshotMode.SelectedIndex = 0;
+
 
         }
-        void LoadScreenVideoMode()
+
+        private void LoadScreenVideoTab()
         {
+            _isInVideoTab = true;
+            HideAppAnimated();
 
-            LoadImageToPictureBox(pbRectangleOptions, @"Data\Dark Mode\Controls\Record Video.png");
-            pbRectangleOptions.Location = new Point(2, 2);
-            CurrentMode = enMode.ScreenVideoMode;
-
-
-
-
-            pbIndecatorScreenshoteMode.Visible = false;
-            pbIndecatorScreenVideoMode.Visible = true;
-            pnlRectangleOptions.Visible = false;
-            LoadIfRectangleOrScreenVideoToolTip(ToolTipApp);
-
-
-           
+            _recordForm = new frmScreenVideoTab(this);
+            _recordForm.FormClosed += (s, args) =>
+            {
+                _recordForm.Dispose();  
+                _recordForm = null;
+                _isInVideoTab = false;
+                ShowApp();
+            };
+            _recordForm.Show();
         }
-
         private void pbScreenVideo_Click(object sender, EventArgs e)
         {
-            LoadScreenVideoMode();
+            LoadScreenVideoTab();
         }
         private void pbScreenshotMode_Click(object sender, EventArgs e)
         {
-            LoadScreenshotMode();
+           switch(CurrentMode)
+            {
+                case enScreenshotMode.Window:
+                    {
+                       RegionScreenshotProcess(); 
+                    }
+                    break;
+                case enScreenshotMode.Freeform:
+                    {
+                        FreeformProcess();
+                    }
+                    break;
+                case enScreenshotMode.FullScreen:
+                    {
+                        FullScreenshotProcess();
+                    }
+                    break;
+            }
         }
 
         // ====================  OCR  ====================
@@ -619,25 +763,25 @@ namespace Screenshot_X
 
                         if (string.IsNullOrWhiteSpace(extractedText))
                         {
-                            Notification.ShowBalloonTip(1500, "Screenshot X", "No Text Here Try Again!", ToolTipIcon.Info);
+                            MainNotification.ShowBalloonTip(1500, "Screenshot X", "No Text Here Try Again!", ToolTipIcon.Info);
                         }
                         else
                         {
                             Clipboard.SetText(extractedText.Trim());
-                            Notification.ShowBalloonTip(1500, "Screenshot X", "Text copied to clipboard!", ToolTipIcon.Info);
+                            MainNotification.ShowBalloonTip(1500, "Screenshot X", "Text copied to clipboard!", ToolTipIcon.Info);
                         }
                     }
                     catch (Exception ex)
                     {
                        
                         string errorMsg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
-                        Notification.ShowBalloonTip(3000, "Screenshot X - OCR Error", errorMsg, ToolTipIcon.Error);
+                        MainNotification.ShowBalloonTip(3000, "Screenshot X - OCR Error", errorMsg, ToolTipIcon.Error);
                     }
                 }
             }
 
             this.Show();
-            pnlRectangleOptions.Visible = false;
+            pnlScreenshotModeTab.Visible = false;
         }
 
         // ====================  Color Picker  ====================
@@ -790,7 +934,7 @@ namespace Screenshot_X
                         Color picked = GetColorAt(new Point(pt.X, pt.Y));
                         string hex = $"#{picked.R:X2}{picked.G:X2}{picked.B:X2}";
                         Clipboard.SetText(hex);
-                        Notification.ShowBalloonTip(1500, "Screenshot X", $"Hexcolor copied to clipboard  \nColor= {hex}", ToolTipIcon.Info);
+                        MainNotification.ShowBalloonTip(1500, "Screenshot X", $"Hexcolor copied to clipboard  \nColor= {hex}", ToolTipIcon.Info);
                         StopColorPicking();
                     }));
                     return (IntPtr)1;
@@ -868,7 +1012,61 @@ namespace Screenshot_X
             }
         }
 
-       
+        private void pbClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void pbChangeMode_Click(object sender, EventArgs e)
+        {
+            cmbScreenshotMode.Visible = !cmbScreenshotMode.Visible;
+        }
+
+        private void frmMainApp_Deactivate(object sender, EventArgs e)
+        {
+            cmbScreenshotMode.Visible=false;
+        }
+
+
+        // ====================  Move Button  ====================
+
+
+        [DllImport("user32.dll")]
+        private static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HT_CAPTION = 0x2;
+
+        private void DragForm(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(this.Handle, WM_NCLBUTTONDOWN, (IntPtr)HT_CAPTION, IntPtr.Zero);
+            }
+        }
+        private void pbMoveButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbMoveButton_MouseDown(object sender, MouseEventArgs e)
+        {
+            DragForm(sender, e);
+        }
+
+
+        private void frmMainApp_LocationChanged(object sender, EventArgs e)
+        {
+            
+            if (_animTimer == null || !_animTimer.Enabled)
+            {
+                _fixedLocation = this.Location;
+            }
+        }
     }
 
 }
