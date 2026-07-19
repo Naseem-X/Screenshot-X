@@ -8,22 +8,222 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Screenshot_X.Properties
-{
-
-
+namespace Screenshot_X.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "18.8.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isCameraON {
+            get {
+                return ((bool)(this["isCameraON"]));
+            }
+            set {
+                this["isCameraON"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int Countdown {
+            get {
+                return ((int)(this["Countdown"]));
+            }
+            set {
+                this["Countdown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RecordTabIsHiddenWhenRecording {
+            get {
+                return ((bool)(this["RecordTabIsHiddenWhenRecording"]));
+            }
+            set {
+                this["RecordTabIsHiddenWhenRecording"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int CameraBorderRadius {
+            get {
+                return ((int)(this["CameraBorderRadius"]));
+            }
+            set {
+                this["CameraBorderRadius"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsCircleCamera {
+            get {
+                return ((bool)(this["IsCircleCamera"]));
+            }
+            set {
+                this["IsCircleCamera"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool _micEnabled {
+            get {
+                return ((bool)(this["_micEnabled"]));
+            }
+            set {
+                this["_micEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int cmbCameraSizeSelectedIndex {
+            get {
+                return ((int)(this["cmbCameraSizeSelectedIndex"]));
+            }
+            set {
+                this["cmbCameraSizeSelectedIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SystemSoundEnabled {
+            get {
+                return ((bool)(this["SystemSoundEnabled"]));
+            }
+            set {
+                this["SystemSoundEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192")]
+        public int CameraWidth {
+            get {
+                return ((int)(this["CameraWidth"]));
+            }
+            set {
+                this["CameraWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("111")]
+        public int CameraHeight {
+            get {
+                return ((int)(this["CameraHeight"]));
+            }
+            set {
+                this["CameraHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ResolutionSelectedIndex {
+            get {
+                return ((int)(this["ResolutionSelectedIndex"]));
+            }
+            set {
+                this["ResolutionSelectedIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ScreenshotModeSelectedIndex {
+            get {
+                return ((int)(this["ScreenshotModeSelectedIndex"]));
+            }
+            set {
+                this["ScreenshotModeSelectedIndex"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ScreenshotSavePath {
+            get {
+                return ((string)(this["ScreenshotSavePath"]));
+            }
+            set {
+                this["ScreenshotSavePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ScreenVideoSavePath {
+            get {
+                return ((string)(this["ScreenVideoSavePath"]));
+            }
+            set {
+                this["ScreenVideoSavePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int AppLocationX {
+            get {
+                return ((int)(this["AppLocationX"]));
+            }
+            set {
+                this["AppLocationX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("-1")]
+        public int AppLocationY {
+            get {
+                return ((int)(this["AppLocationY"]));
+            }
+            set {
+                this["AppLocationY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowfrmWhatIsNewTab {
+            get {
+                return ((bool)(this["ShowfrmWhatIsNewTab"]));
+            }
+            set {
+                this["ShowfrmWhatIsNewTab"] = value;
             }
         }
     }

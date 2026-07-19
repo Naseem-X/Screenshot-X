@@ -73,26 +73,6 @@ namespace Screenshot_X.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap BackGround_Gray {
-            get {
-                object obj = ResourceManager.GetObject("BackGround Gray", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Background_Gray_Color {
-            get {
-                object obj = ResourceManager.GetObject("Background Gray Color", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap BackGround_Gray1 {
             get {
                 object obj = ResourceManager.GetObject("BackGround Gray1", resourceCulture);
@@ -103,9 +83,9 @@ namespace Screenshot_X.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CLose {
+        internal static System.Drawing.Bitmap BackGround_Gray2 {
             get {
-                object obj = ResourceManager.GetObject("CLose", resourceCulture);
+                object obj = ResourceManager.GetObject("BackGround Gray2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +93,49 @@ namespace Screenshot_X.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap CLose1 {
+        internal static System.Drawing.Bitmap BackGround_Setting_Gray {
             get {
-                object obj = ResourceManager.GetObject("CLose1", resourceCulture);
+                object obj = ResourceManager.GetObject("BackGround Setting Gray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Betbeen_First_And_Last_Version {
+            get {
+                object obj = ResourceManager.GetObject("Betbeen First And Last Version", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Camera_Off {
+            get {
+                object obj = ResourceManager.GetObject("Camera Off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Camera_On {
+            get {
+                object obj = ResourceManager.GetObject("Camera On", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CLose {
+            get {
+                object obj = ResourceManager.GetObject("CLose", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +193,39 @@ namespace Screenshot_X.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GitHubLogo {
+            get {
+                object obj = ResourceManager.GetObject("GitHubLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap HiddenTab {
             get {
                 object obj = ResourceManager.GetObject("HiddenTab", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Info {
+            get {
+                object obj = ResourceManager.GetObject("Info", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Logo_App {
+            get {
+                object obj = ResourceManager.GetObject("Logo App", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +263,29 @@ namespace Screenshot_X.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Pause {
+            get {
+                object obj = ResourceManager.GetObject("Pause", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Record_Video {
             get {
                 object obj = ResourceManager.GetObject("Record Video", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RecordingControlTab {
+            get {
+                object obj = ResourceManager.GetObject("RecordingControlTab", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,6 +303,26 @@ namespace Screenshot_X.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Red_Pulsing_Dot {
+            get {
+                object obj = ResourceManager.GetObject("Red Pulsing Dot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Rexord_Setting_Tab {
+            get {
+                object obj = ResourceManager.GetObject("Rexord Setting Tab", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Screen_Video {
             get {
                 object obj = ResourceManager.GetObject("Screen Video", resourceCulture);
@@ -243,9 +333,9 @@ namespace Screenshot_X.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Screenshot_Mode {
+        internal static System.Drawing.Bitmap Screenshot {
             get {
-                object obj = ResourceManager.GetObject("Screenshot Mode", resourceCulture);
+                object obj = ResourceManager.GetObject("Screenshot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -256,6 +346,16 @@ namespace Screenshot_X.Properties {
         internal static System.Drawing.Bitmap Setting {
             get {
                 object obj = ResourceManager.GetObject("Setting", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VolumeOn {
+            get {
+                object obj = ResourceManager.GetObject("VolumeOn", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

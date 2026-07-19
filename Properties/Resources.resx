@@ -118,67 +118,97 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BackGround Gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Rectangle Controls\BackGround Gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Full Screen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Rectangle Controls\Full Screen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Active indicator" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Active indicator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Muted" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Mic\Muted.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Exit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\record tab\Exit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Draw" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Draw.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Screenshot Mode" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Screenshot Mode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Record Video" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Record Tab\Record Video.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Screen Video" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Video Mode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Setting" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\record tab\Setting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="OCR" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\OCR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BackGround Gray1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\record tab\BackGround Gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Minimize" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Minimize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CLose" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\CLose.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HiddenTab" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Record Tab\HiddenTab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Window" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\Rectangle Controls\Window.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Camera Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Record Tab\Camera Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Freeform" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Dark Mode\Controls\Rectangle Controls\Freeform.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="color-picker" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Controls\color-picker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Exit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\record tab\Exit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Rectangler" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Dark Mode\Controls\Rectangler.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Background Gray Color" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Data\Dark Mode\Background Gray Color.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Window" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Rectangle Controls\Window.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="CLose1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="BackGround Gray1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\record tab\BackGround Gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Screenshot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Screenshot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RecordingControlTab" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Record Tab\RecordingControlTab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Muted" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Mic\Muted.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Setting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\record tab\Setting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Record Tab\Pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Record Video" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Record Tab\Record Video.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Red Pulsing Dot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Record Tab\Red Pulsing Dot.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Camera On" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Record Tab\Camera On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GitHubLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\GitHubLogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackGround Setting Gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\BackGround Setting Gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Minimize" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Minimize.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Rexord Setting Tab" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Record Tab\Rexord Setting Tab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="color-picker" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\color-picker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Info" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Info.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Active indicator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Active indicator.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Screen Video" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Video Mode.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Full Screen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Rectangle Controls\Full Screen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackGround Gray2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\BackGround Gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CLose" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Data\Dark Mode\Controls\CLose.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VolumeOn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Record Tab\VolumeOn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OCR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\OCR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HiddenTab" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Record Tab\HiddenTab.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo App" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Logo App.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Draw" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Dark Mode\Controls\Draw.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Betbeen First And Last Version" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Data\Betbeen First And Last Version.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
