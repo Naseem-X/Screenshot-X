@@ -370,14 +370,7 @@ namespace Screenshot_X.Forms
             Color BackColor = ColorTranslator.FromHtml("#151515");
             Color ForeColor = ColorTranslator.FromHtml("#60CDFF");
 
-            /*    tbxBorderRadius.ForeColor = ForeColor;
-                tbxCountdown_Sec.ForeColor = ForeColor;
-                tbxHeight.ForeColor = ForeColor;
-                tbxWidth.ForeColor = ForeColor;
-                ckbHideTab.BackColor = BackColor;
-                ckbHideTab.ForeColor = ForeColor;
-                cbxCricleCamera.BackColor = BackColor;
-                cbxCricleCamera.ForeColor = ForeColor;*/
+     
 
 
             lblDefaultScreenshotPath.BackColor = BackColor;
@@ -652,6 +645,8 @@ namespace Screenshot_X.Forms
 
         private void pbStartRecording_Click(object sender, EventArgs e)
         {
+            LoadImageToPictureBox(pbPause, @"Data\Dark Mode\Controls\record tab\Pause.png");
+
             lblRecordingTime_Click(sender, e);
             pnlRecordSettingTab.Visible = false;
 
@@ -664,31 +659,33 @@ namespace Screenshot_X.Forms
             }
             else
             {
-                
                 pbStartRecording.Location = new Point(90, 12);
                 if (Countdown > 0)
                 {
                     frmCounter CounDown = new frmCounter();
                     _activeCounter = CounDown;
-                
-                CounDown.Countdown = Countdown;
-                CounDown.CountdownFinished += () =>
-                {
-                    pnlRecordingControl.Visible = true;
-                    if (this.IsDisposed || !this.IsHandleCreated)
-                        return;
 
-                    this.Invoke((Action)(() =>
+                    CounDown.Countdown = Countdown;
+                    CounDown.CountdownFinished += () =>
                     {
-                        BeginActualRecording();
-                        LoadImageToPictureBox(pbStartRecording, @"Data\\Dark Mode\\Controls\\record tab\\End Record.png");
-                        IsRecordingNow = true;
-                    }));
-                };
-                CounDown.Show();
+                        pnlRecordingControl.Visible = true;
+
+                        if (this.IsDisposed || !this.IsHandleCreated)
+                            return;
+
+                        this.Invoke((Action)(() =>
+                        {
+                            BeginActualRecording();
+                            LoadImageToPictureBox(pbStartRecording, @"Data\\Dark Mode\\Controls\\record tab\\End Record.png");
+                            IsRecordingNow = true;
+                        }));
+                    };
+                    CounDown.Show();
                 }
                 else
                 {
+                    pnlRecordingControl.Visible = true;    
+
                     if (this.IsDisposed || !this.IsHandleCreated)
                         return;
 
@@ -712,23 +709,20 @@ namespace Screenshot_X.Forms
         {
             StartRecording();
             RecordTime.Start();
-           
 
-           
             HideThisTabToggle();
 
             _mainApp.SwitchToRecordingTray();
 
-          
+            EnsureCameraOverlayExists();   
+
             if (isCameraON)
             {
-                
                 _CameraOverlay.TopMost = true;
                 _CameraOverlay.Show();
             }
             else
             {
-                 
                 _CameraOverlay?.StopCamera();
                 _CameraOverlay?.Hide();
             }
@@ -1242,22 +1236,27 @@ namespace Screenshot_X.Forms
             _CameraOverlay?.StopCamera();
             _CameraOverlay?.Close();
         }
-
+        private void EnsureCameraOverlayExists()
+        {
+            if (_CameraOverlay == null || _CameraOverlay.IsDisposed)
+            {
+                InitCameraPreview();
+            }
+        }
         void LoadCameraStatus()
         {
+            EnsureCameraOverlayExists();   // ← جديد
+
             if (!isCameraON)
             {
-
                 _CameraOverlay?.StopCamera();
                 _CameraOverlay?.Hide();
                 LoadImageToPictureBox(pbShowCameraPreview, "Data/Dark Mode/Controls/record tab/Camera Off.png");
                 isCameraON = false;
                 pbCameraPulseOn.Visible = false;
-
             }
             else
             {
-
                 _CameraOverlay?.Show();
                 _CameraOverlay?.StartCamera();
                 LoadImageToPictureBox(pbShowCameraPreview, "Data/Dark Mode/Controls/record tab/Camera On.png");
@@ -1276,8 +1275,8 @@ namespace Screenshot_X.Forms
             if (int.TryParse(tbxWidth.Text, out int value) && value > 0)
             {
                 CameraWidth = value;
-                if (_CameraOverlay != null)
-                    _CameraOverlay.Size = new Size(CameraWidth, CameraHeight);
+                EnsureCameraOverlayExists();   // ← جديد
+                _CameraOverlay.Size = new Size(CameraWidth, CameraHeight);
             }
         }
 
@@ -1286,8 +1285,8 @@ namespace Screenshot_X.Forms
             if (int.TryParse(tbxHeight.Text, out int value) && value > 0)
             {
                 CameraHeight = value;
-                if (_CameraOverlay != null)
-                    _CameraOverlay.Size = new Size(CameraWidth, CameraHeight);
+                EnsureCameraOverlayExists();   // ← جديد
+                _CameraOverlay.Size = new Size(CameraWidth, CameraHeight);
             }
         }
 
@@ -1298,11 +1297,10 @@ namespace Screenshot_X.Forms
 
         private void lblResetSize_Click(object sender, EventArgs e)
         {
-
+            EnsureCameraOverlayExists();   // ← جديد
             _CameraOverlay.Size = new Size(192, 111);
 
             LoadCurrentCameraSizeToComboBox();
-
             cmbCameraSize.SelectedIndex = cmbCameraSizeSelectedIndex;
         }
 
@@ -1375,67 +1373,51 @@ namespace Screenshot_X.Forms
         }
 
         private void cmbCameraSize_SelectedIndexChanged(object sender, EventArgs e)
-        {       IsCustomSizeMode = false;
+        {
+            IsCustomSizeMode = false;
             switch (cmbCameraSize.SelectedIndex)
-            {  
-                case 0:  
+            {
+                case 0:
                     CameraWidth = 192;
                     CameraHeight = 111;
-                    
-                  
                     break;
 
-                case 1: 
+                case 1:
                     CameraWidth = 320;
                     CameraHeight = 180;
-                    
-
                     break;
 
-                case 2:  
+                case 2:
                     CameraWidth = 480;
                     CameraHeight = 270;
-                     
-
                     break;
 
                 case 3:
                     IsCustomSizeMode = true;
-                  
                     break;
             }
             EnabledOrDisabletbxWidth_Height(IsCustomSizeMode);
-
             LoadCurrentCameraSizeToComboBox();
 
-            if (_CameraOverlay != null)
-                _CameraOverlay.Size = new Size(CameraWidth, CameraHeight);
+            EnsureCameraOverlayExists();   // ← جديد
+            _CameraOverlay.Size = new Size(CameraWidth, CameraHeight);
 
             cmbCameraSizeSelectedIndex = cmbCameraSize.SelectedIndex;
-
         }
-       
+
         private void cbxCricleCamea_Click(object sender, EventArgs e)
         {
-            
+            EnsureCameraOverlayExists();   // ← جديد
             _CameraOverlay.IsCircleCamera = cbxCricleCamera.Checked;
 
-            tbxBorderRadius.Enabled= !cbxCricleCamera.Checked;
+            tbxBorderRadius.Enabled = !cbxCricleCamera.Checked;
 
-            if (  tbxBorderRadius.Enabled)
-            {
+            if (tbxBorderRadius.Enabled)
                 tbxBorderRadius.Cursor = Cursors.IBeam;
-
-            }
             else
-            {
                 tbxBorderRadius.Cursor = Cursors.No;
-
-            }
-
-           
         }
 
-      
+
     }
 }
