@@ -4,7 +4,7 @@
 
 <h1 align="center">Screenshot-X</h1>
 
-<p align="center">A lightweight, all-in-one screenshot and screen recording tool for Windows, built with C# WinForms.</p>
+<p align="center">A lightweight, All-In-One Screenshot And Screen Recording Tool for Windows (10,11), built with C# WinForms.</p>
 
 ![Version](https://img.shields.io/badge/version-1.2-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)
